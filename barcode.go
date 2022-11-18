@@ -2,16 +2,9 @@ package main
 
 import (
 	"net/http"
-	// "fmt"
 	"log"
-	// "reflect"
-	// "image"
-	// "image/color"
-	// "fs"
-	// "encoding/json"
 	"strconv"
 	"image/png"
-	// "os"
 	"github.com/boombuler/barcode"
 	"github.com/boombuler/barcode/aztec"
 	"github.com/boombuler/barcode/qr"
@@ -86,13 +79,11 @@ func qrCode(w http.ResponseWriter,r *http.Request){
 
 		case "code39":
 			qrCode, _ := code39.Encode(data, true, true)
-			// qrCode, _ = barcode.Scale(qrCode, width, height)
  			png.Encode(w, qrCode)
 			return
 
 		case "code93":
 			qrCode, _ := code93.Encode(data, true, true)
-			// qrCode, _ = barcode.Scale(qrCode, width, height)
  			png.Encode(w, qrCode)
 			return
 		case "datamatrix":
@@ -116,8 +107,7 @@ func qrCode(w http.ResponseWriter,r *http.Request){
 			if err==nil && (len(data)==8 || len(data)==13){
 				var qrCode barcode.Barcode
 				qrCode, _ = ean.Encode(data)
-				// scale to 100x100
-				qrCode, _ = barcode.Scale(qrCode, 100, 100)
+				qrCode, _ = barcode.Scale(qrCode, width, height)
 				png.Encode(w, qrCode)
 			}
 			w.Write( []byte("Please enter a 8-digit or 13-digit number") )
